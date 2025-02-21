@@ -9,7 +9,7 @@
     
     <body onload='inicio()'>
     
-        <div id='mostrar'>RESULTADOS</div>
+        <div id='mostrar'></div>
         
       <script>
           var resultado = [];
@@ -24,7 +24,10 @@
         
         
           for (let i = 0; i < array.length; i++) {
-            recorrer(array[i]);
+            let ultimo = false;
+            console.log(i,array.length)
+            if(i+1 === array.length)ultimo =true;
+            recorrer(array[i],ultimo);
             //resultado.push(elemento.toString());
           }
         
@@ -33,22 +36,30 @@
           
         }
         
-        function recorrer (recibido) {
+        function recorrer (recibido, ultimo) {
           fetch(recibido)
           .then(response => response.text())
           .then(textString => {
             if(buscar(textString, "13"))
-                resultado.push(recibido);
-                document.getElementById('mostrar').innerHTML = resultado;
+            {
+                modificar(recibido);        
+            }    
           });
         }
 
         function buscar(texto,palabra)
         {
             if(texto.indexOf(palabra)>=0) return true;
-            
+
             return false;
         }
+        
+        function modificar(recibido)
+        {
+          let txt = "<a href='#''>" + recibido + "</a><br>";
+          document.getElementById('mostrar').innerHTML +=  txt;
+        }
+
       </script>
 </body>
 </html>
